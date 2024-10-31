@@ -1,0 +1,55 @@
+<p class="text-success"><%= notice %></p>
+
+<p><strong>Auteur :</strong> 
+  <% if @the_gossip_project.user %>
+    <%= link_to @the_gossip_project.user.first_name, user_path(@the_gossip_project.user), class: "text-primary" %>
+  <% else %>
+    <span>Aucun auteur</span>
+  <% end %>
+</p>
+
+<p><strong>Ville de l'auteur :</strong> 
+  <% if @the_gossip_project.user&.city %>
+    <%= link_to @the_gossip_project.user.city.name, city_path(@the_gossip_project.user.city), class: "text-primary" %>
+  <% else %>
+    <span>Aucune ville</span>
+  <% end %>
+</p>
+
+<div class="container">
+  <div class="card">
+    <div class="card-body">
+      <%= render @the_gossip_project %>
+    </div>
+  </div>
+
+  <div class="mt-3">
+    <%= link_to "Edit this Gossip Project", edit_the_gossip_project_path(@the_gossip_project), class: "btn btn-warning" %>
+    <%= link_to "Back to Gossip Projects", the_gossip_projects_path, class: "btn btn-secondary" %>
+    
+    <%= button_to "Destroy this Gossip Project", @the_gossip_project, method: :delete, data: { confirm: "Are you sure?" }, class: "btn btn-danger" %>
+  </div>
+</div>
+
+
+<h3>Commentaires</h3>
+
+<% @the_gossip_project.comments.each do |comment| %>
+  <li>
+    <strong><%= comment.user.first_name %> :</strong> <%= comment.content %>
+    <%= form_with(url: the_gossip_project_comment_path(@the_gossip_project, comment), method: :delete, local: true) do %>
+      <%= submit_tag "Supprimer", class: "text-danger" %>
+    <% end %>
+  </li>
+<% end %>
+
+<h4>Ajouter un commentaire</h4>
+
+<%= form_with(model: [@the_gossip_project, Comment.new], local: true) do |form| %>
+  <div class="form-group">
+    <%= form.text_area :content, class: "form-control", placeholder: "Votre commentaire..." %>
+  </div>
+  <div class="form-group mt-2">
+    <%= form.submit "Commenter", class: "btn btn-primary" %>
+  </div>
+<% end %>

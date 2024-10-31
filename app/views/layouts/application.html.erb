@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <!-- Autres balises head -->
+
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <title><%= content_for(:title) || "Tgp" %></title>
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <meta name="mobile-web-app-capable" content="yes">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= yield :head %>
+    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  </head>
+
+  <body>
+    <!-- Barre de navigation avec les boutons Inscription, Connexion, et Déconnexion -->
+    <% if session[:user_id] %>
+      <%= form_with(url: session_path(session[:user_id]), method: :delete, local: true) do %>
+        <%= submit_tag "Déconnexion", class: "btn btn-danger" %>
+      <% end %>
+    <% else %>
+      <%= link_to "S'inscrire", new_user_path, class: "btn btn-primary" %>
+      <%= link_to "Connexion", new_session_path, class: "btn btn-secondary" %>
+    <% end %>
+
+    <%= yield %>
+
+    <!-- Scripts pour Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+  </body>
+</html>

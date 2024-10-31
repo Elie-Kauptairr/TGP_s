@@ -1,0 +1,22 @@
+<p class="text-success"><%= notice %></p>
+
+<% content_for :title, "The Gossip Projects" %>
+
+<div class="container">
+  <h1 class="text-center">The Gossip Projects</h1>
+
+  <div id="the_gossip_projects" class="list-group">
+    <% @the_gossip_projects.each do |the_gossip_project| %>
+      <div class="list-group-item">
+        <%= render the_gossip_project %>
+        <p>
+          <%= link_to "Show this Gossip Project", the_gossip_project, class: "btn btn-info mt-2" %>
+        </p>
+      </div>
+    <% end %>
+  </div>
+
+  <div class="text-center mt-4">
+    <%= link_to "New Gossip Project", new_the_gossip_project_path, class: "btn btn-primary" %>
+  </div>
+</div>
